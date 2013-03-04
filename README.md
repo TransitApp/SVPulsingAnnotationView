@@ -1,5 +1,3 @@
-_**Important note if your project doesn't use ARC**: you must add the `-fobjc-arc` compiler flag to `SVPulsingAnnotationView.m` in Target Settings > Build Phases > Compile Sources._
-
 # SVPulsingAnnotationView
 
 SVPulsingAnnotationView is a customizable and pixel perfect CoreGraphics replica of Apple's MKUserLocationAnnotationView.
@@ -11,6 +9,8 @@ SVPulsingAnnotationView is a customizable and pixel perfect CoreGraphics replica
 Add `pod 'SVPulsingAnnotationView'` to your Podfile or `pod 'SVPulsingAnnotationView', :head` if you're feeling adventurous.
 
 ### Manually
+
+_**Important note if your project doesn't use ARC**: you must add the `-fobjc-arc` compiler flag to `SVPulsingAnnotationView.m` in Target Settings > Build Phases > Compile Sources._
 
 * Drag the `SVPulsingAnnotationView/SVPulsingAnnotationView` folder into your project. 
 * Add the **QuartzCore** and **MapKit** frameworks to your project.
