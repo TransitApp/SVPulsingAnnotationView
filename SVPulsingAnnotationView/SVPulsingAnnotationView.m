@@ -121,26 +121,25 @@
     CGPoint center = CGPointMake(glowRadius+radius, glowRadius+radius);
     CGRect imageBounds = CGRectMake(0, 0, center.x*2, center.y*2);
     CGRect ringFrame = CGRectMake(glowRadius, glowRadius, radius*2, radius*2);
+    
     UIGraphicsBeginImageContextWithOptions(imageBounds.size, NO, 0);
-
     CGContextRef context = UIGraphicsGetCurrentContext();
-    UIColor* fillColor = [UIColor colorWithRed: 1 green: 1 blue: 1 alpha: 1];
-    UIColor* routeColor = self.annotationColor;
+    UIColor* ringColor = [UIColor whiteColor];
+    [ringColor setFill];
+    
+    UIBezierPath *ringPath = [UIBezierPath bezierPathWithOvalInRect:ringFrame];
+    [ringPath appendPath:[UIBezierPath bezierPathWithOvalInRect:CGRectInset(ringFrame, ringThickness, ringThickness)]];
+    ringPath.usesEvenOddFillRule = YES;
     
     for(float i=1.3; i>0.3; i-=0.18) {
-        UIBezierPath* bezierPath = [UIBezierPath bezierPathWithOvalInRect:ringFrame];
-        [bezierPath appendPath:[UIBezierPath bezierPathWithOvalInRect:CGRectInset(ringFrame, ringThickness, ringThickness)]];
-        bezierPath.usesEvenOddFillRule = YES;
-        
         CGFloat blurRadius = MIN(1, i)*glowRadius;
-        CGContextSetShadowWithColor(context, CGSizeZero, blurRadius, routeColor.CGColor);
-        [fillColor setFill];
-        [bezierPath fill];
+        CGContextSetShadowWithColor(context, CGSizeZero, blurRadius, self.annotationColor.CGColor);
+        [ringPath fill];
     }
-
+    
     UIImage *ringImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-        
+    
     return ringImage;
 }
 
