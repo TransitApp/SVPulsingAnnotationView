@@ -8,8 +8,6 @@
 
 #import <MapKit/MapKit.h>
 
-@class SPRealTimeVehicleLocation;
-
 @interface SVPulsingAnnotationView : MKAnnotationView
 
 @property (nonatomic, strong) UIColor *annotationColor;
