@@ -1,6 +1,8 @@
 # SVPulsingAnnotationView
 
-SVPulsingAnnotationView is a customizable and pixel perfect CoreGraphics replica of Apple's `MKUserLocationView`.
+SVPulsingAnnotationView is a customizable, high-fidelity replica of Apple's `MKUserLocationView`. 
+
+For more details of how it was created, header over to "Recreating MKUserLocationView":http://samvermette.com/317 blog post.
 
 ![SVPulsingAnnotationView](http://cl.ly/NI4r/SVPulsingAnnotationView.gif)
 
@@ -55,3 +57,5 @@ SVPulsingAnnotationView can be customized with the following properties:
 ## Credits
 
 SVPulsingAnnotationView is brought to you by [Sam Vermette](http://samvermette.com) and [contributors to the project](https://github.com/samvermette/SVPulsingAnnotationView/contributors). If you have feature suggestions or bug reports, feel free to help out by sending pull requests or by [creating new issues](https://github.com/samvermette/SVPulsingAnnotationView/issues/new). If you're using SVPulsingAnnotationView in your project, attribution would be nice.
+
+Hat tip to "Nick Farina":http://nfarina.com for sharing the process of "creating his UICalloutView replica":http://nfarina.com/post/29883229869/callout-view.
