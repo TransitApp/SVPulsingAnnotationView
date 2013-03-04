@@ -17,7 +17,10 @@
 		22AE8E2C16E41FBC009CF494 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 22AE8E2B16E41FBC009CF494 /* Default@2x.png */; };
 		22AE8E2E16E41FBC009CF494 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 22AE8E2D16E41FBC009CF494 /* Default-568h@2x.png */; };
 		22AE8E3116E41FBC009CF494 /* SVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22AE8E3016E41FBC009CF494 /* SVViewController.m */; };
-		22AE8E3416E41FBC009CF494 /* SVViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22AE8E3216E41FBC009CF494 /* SVViewController.xib */; };
+		22AE8E3D16E42052009CF494 /* SVPulsingAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 22AE8E3C16E42052009CF494 /* SVPulsingAnnotationView.m */; };
+		22AE8E3F16E42093009CF494 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22AE8E3E16E42093009CF494 /* QuartzCore.framework */; };
+		22AE8E4116E420C4009CF494 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22AE8E4016E420C3009CF494 /* MapKit.framework */; };
+		22AE8E4316E42248009CF494 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22AE8E4216E42248009CF494 /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,7 +39,11 @@
 		22AE8E2D16E41FBC009CF494 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		22AE8E2F16E41FBC009CF494 /* SVViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SVViewController.h; sourceTree = "<group>"; };
 		22AE8E3016E41FBC009CF494 /* SVViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SVViewController.m; sourceTree = "<group>"; };
-		22AE8E3316E41FBC009CF494 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SVViewController.xib; sourceTree = "<group>"; };
+		22AE8E3B16E42052009CF494 /* SVPulsingAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPulsingAnnotationView.h; sourceTree = "<group>"; };
+		22AE8E3C16E42052009CF494 /* SVPulsingAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPulsingAnnotationView.m; sourceTree = "<group>"; };
+		22AE8E3E16E42093009CF494 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		22AE8E4016E420C3009CF494 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		22AE8E4216E42248009CF494 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,6 +51,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22AE8E4316E42248009CF494 /* CoreLocation.framework in Frameworks */,
+				22AE8E4116E420C4009CF494 /* MapKit.framework in Frameworks */,
+				22AE8E3F16E42093009CF494 /* QuartzCore.framework in Frameworks */,
 				22AE8E1816E41FBC009CF494 /* UIKit.framework in Frameworks */,
 				22AE8E1A16E41FBC009CF494 /* Foundation.framework in Frameworks */,
 				22AE8E1C16E41FBC009CF494 /* CoreGraphics.framework in Frameworks */,
@@ -56,7 +66,8 @@
 		22AE8E0B16E41FBC009CF494 = {
 			isa = PBXGroup;
 			children = (
-				22AE8E1D16E41FBC009CF494 /* SVPulsingAnnotationView */,
+				22AE8E1D16E41FBC009CF494 /* Demo */,
+				22AE8E3A16E42052009CF494 /* SVPulsingAnnotationView */,
 				22AE8E1616E41FBC009CF494 /* Frameworks */,
 				22AE8E1516E41FBC009CF494 /* Products */,
 			);
@@ -73,6 +84,9 @@
 		22AE8E1616E41FBC009CF494 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				22AE8E4216E42248009CF494 /* CoreLocation.framework */,
+				22AE8E4016E420C3009CF494 /* MapKit.framework */,
+				22AE8E3E16E42093009CF494 /* QuartzCore.framework */,
 				22AE8E1716E41FBC009CF494 /* UIKit.framework */,
 				22AE8E1916E41FBC009CF494 /* Foundation.framework */,
 				22AE8E1B16E41FBC009CF494 /* CoreGraphics.framework */,
@@ -80,16 +94,16 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		22AE8E1D16E41FBC009CF494 /* SVPulsingAnnotationView */ = {
+		22AE8E1D16E41FBC009CF494 /* Demo */ = {
 			isa = PBXGroup;
 			children = (
 				22AE8E2616E41FBC009CF494 /* SVAppDelegate.h */,
 				22AE8E2716E41FBC009CF494 /* SVAppDelegate.m */,
 				22AE8E2F16E41FBC009CF494 /* SVViewController.h */,
 				22AE8E3016E41FBC009CF494 /* SVViewController.m */,
-				22AE8E3216E41FBC009CF494 /* SVViewController.xib */,
 				22AE8E1E16E41FBC009CF494 /* Supporting Files */,
 			);
+			name = Demo;
 			path = SVPulsingAnnotationView;
 			sourceTree = "<group>";
 		};
@@ -105,6 +119,16 @@
 				22AE8E2D16E41FBC009CF494 /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		22AE8E3A16E42052009CF494 /* SVPulsingAnnotationView */ = {
+			isa = PBXGroup;
+			children = (
+				22AE8E3B16E42052009CF494 /* SVPulsingAnnotationView.h */,
+				22AE8E3C16E42052009CF494 /* SVPulsingAnnotationView.m */,
+			);
+			name = SVPulsingAnnotationView;
+			path = ../SVPulsingAnnotationView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -163,7 +187,6 @@
 				22AE8E2A16E41FBC009CF494 /* Default.png in Resources */,
 				22AE8E2C16E41FBC009CF494 /* Default@2x.png in Resources */,
 				22AE8E2E16E41FBC009CF494 /* Default-568h@2x.png in Resources */,
-				22AE8E3416E41FBC009CF494 /* SVViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -177,6 +200,7 @@
 				22AE8E2416E41FBC009CF494 /* main.m in Sources */,
 				22AE8E2816E41FBC009CF494 /* SVAppDelegate.m in Sources */,
 				22AE8E3116E41FBC009CF494 /* SVViewController.m in Sources */,
+				22AE8E3D16E42052009CF494 /* SVPulsingAnnotationView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -189,14 +213,6 @@
 				22AE8E2116E41FBC009CF494 /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		22AE8E3216E41FBC009CF494 /* SVViewController.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				22AE8E3316E41FBC009CF494 /* en */,
-			);
-			name = SVViewController.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -299,6 +315,7 @@
 				22AE8E3916E41FBC009CF494 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
