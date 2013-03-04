@@ -2,7 +2,7 @@
 
 SVPulsingAnnotationView is a customizable, high-fidelity replica of Apple's `MKUserLocationView`. 
 
-For more details of how it was created, header over to [Recreating MKUserLocationView](http://samvermette.com/317) blog post.
+For more details about how it was created, head over to my [Recreating MKUserLocationView](http://samvermette.com/317) blog post.
 
 ![SVPulsingAnnotationView](http://cl.ly/NI4r/SVPulsingAnnotationView.gif)
 
