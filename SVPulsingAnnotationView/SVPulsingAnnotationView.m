@@ -37,14 +37,19 @@
 - (void)setAnnotationColor:(UIColor *)annotationColor {
     _annotationColor = annotationColor;
     
-    [_haloLayer removeFromSuperlayer];
-    _haloLayer = nil;
+    [self rebuildLayers];
+}
+
+- (void)setDelayBetweenPulseCycles:(NSTimeInterval)delayBetweenPulseCycles {
+    _delayBetweenPulseCycles = delayBetweenPulseCycles;
     
-    [_dotLayer removeFromSuperlayer];
-    _dotLayer = nil;
+    [self rebuildLayers];
+}
+
+- (void)setPulseAnimationDuration:(NSTimeInterval)pulseAnimationDuration {
+    _pulseAnimationDuration = pulseAnimationDuration;
     
-    [self.layer addSublayer:self.haloLayer];
-    [self.layer addSublayer:self.dotLayer];
+    [self rebuildLayers];
 }
 
 #pragma mark - Getters
@@ -380,5 +385,17 @@
     return dotImage;
 }
 
+#pragma mark -
+
+- (void)rebuildLayers {
+    [_haloLayer removeFromSuperlayer];
+    _haloLayer = nil;
+    
+    [_dotLayer removeFromSuperlayer];
+    _dotLayer = nil;
+    
+    [self.layer addSublayer:self.haloLayer];
+    [self.layer addSublayer:self.dotLayer];
+}
 
 @end
