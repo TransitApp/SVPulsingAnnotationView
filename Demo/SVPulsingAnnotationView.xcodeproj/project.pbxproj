@@ -21,6 +21,7 @@
 		22AE8E3F16E42093009CF494 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22AE8E3E16E42093009CF494 /* QuartzCore.framework */; };
 		22AE8E4116E420C4009CF494 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22AE8E4016E420C3009CF494 /* MapKit.framework */; };
 		22AE8E4316E42248009CF494 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22AE8E4216E42248009CF494 /* CoreLocation.framework */; };
+		22AE8E4816E48F2E009CF494 /* SVAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 22AE8E4716E48F2E009CF494 /* SVAnnotation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,8 @@
 		22AE8E3E16E42093009CF494 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		22AE8E4016E420C3009CF494 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		22AE8E4216E42248009CF494 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		22AE8E4616E48F2E009CF494 /* SVAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVAnnotation.h; sourceTree = "<group>"; };
+		22AE8E4716E48F2E009CF494 /* SVAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVAnnotation.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +104,8 @@
 				22AE8E2716E41FBC009CF494 /* SVAppDelegate.m */,
 				22AE8E2F16E41FBC009CF494 /* SVViewController.h */,
 				22AE8E3016E41FBC009CF494 /* SVViewController.m */,
+				22AE8E4616E48F2E009CF494 /* SVAnnotation.h */,
+				22AE8E4716E48F2E009CF494 /* SVAnnotation.m */,
 				22AE8E1E16E41FBC009CF494 /* Supporting Files */,
 			);
 			name = Demo;
@@ -201,6 +206,7 @@
 				22AE8E2816E41FBC009CF494 /* SVAppDelegate.m in Sources */,
 				22AE8E3116E41FBC009CF494 /* SVViewController.m in Sources */,
 				22AE8E3D16E42052009CF494 /* SVPulsingAnnotationView.m in Sources */,
+				22AE8E4816E48F2E009CF494 /* SVAnnotation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
