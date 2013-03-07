@@ -35,6 +35,11 @@
 #pragma mark - Setters
 
 - (void)setAnnotationColor:(UIColor *)annotationColor {
+    if(CGColorGetNumberOfComponents(annotationColor.CGColor) == 2) {
+        float white = CGColorGetComponents(annotationColor.CGColor)[0];
+        float alpha = CGColorGetComponents(annotationColor.CGColor)[1];
+        annotationColor = [UIColor colorWithRed:white green:white blue:white alpha:alpha];
+    }
     _annotationColor = annotationColor;
     
     [self rebuildLayers];
