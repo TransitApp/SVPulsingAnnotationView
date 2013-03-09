@@ -1,8 +1,6 @@
 # SVPulsingAnnotationView
 
-SVPulsingAnnotationView is a customizable, high-fidelity replica of Apple's `MKUserLocationView`. 
-
-For more details about how it was created, head over to my [Recreating MKUserLocationView](http://samvermette.com/317) blog post.
+SVPulsingAnnotationView is a customizable Core Graphics replica of Apple's `MKUserLocationView`. 
 
 ![SVPulsingAnnotationView](http://cl.ly/NI4r/SVPulsingAnnotationView.gif)
 
@@ -53,6 +51,14 @@ SVPulsingAnnotationView can be customized with the following properties:
 @property (nonatomic, readwrite) NSTimeInterval pulseAnimationDuration;
 @property (nonatomic, readwrite) NSTimeInterval delayBetweenPulseCycles;
 ```
+
+## Under the Hood
+
+Both the annotation dot and halo ring are drawn using Core Graphics exclusively, therefore making customization possible. The halo ring animation is an authentic copy of Apple's original animation, figured out by introspecting `MKUserLocationView`.
+
+The halo ring animation consists of a `CAAnimationGroup` encapsulating 3 distinct animations taking care of the opacity, scale, and the halo image itself. Like the original `MKUserLocationView` implementation, the animation switches between 3 distinct sizes of the halo ring image (drawn programmatically using `haloImageWithRadius:`) for crispier rendering.
+
+For more juicy details, head over to my [Recreating MKUserLocationView](http://samvermette.com/317) blog post.
 
 ## Credits
 
