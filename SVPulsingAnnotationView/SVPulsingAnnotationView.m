@@ -1,9 +1,8 @@
 //
 //  SPRealTimeVehicleAnnotationView.m
-//  Transit
 //
 //  Created by Sam Vermette on 01.03.13.
-//
+//  https://github.com/samvermette/SVPulsingAnnotationView
 //
 
 #import "SVPulsingAnnotationView.h"
