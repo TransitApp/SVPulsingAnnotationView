@@ -9,8 +9,8 @@
 
 @interface SVPulsingAnnotationView : MKAnnotationView
 
-@property (nonatomic, strong) UIColor *annotationColor;
-@property (nonatomic, readwrite) NSTimeInterval pulseAnimationDuration;
-@property (nonatomic, readwrite) NSTimeInterval delayBetweenPulseCycles;
+@property (nonatomic, strong) UIColor *annotationColor; // default is same as MKUserLocationView
+@property (nonatomic, readwrite) NSTimeInterval pulseAnimationDuration; // default is 1s
+@property (nonatomic, readwrite) NSTimeInterval delayBetweenPulseCycles; // default is 1s
 
 @end

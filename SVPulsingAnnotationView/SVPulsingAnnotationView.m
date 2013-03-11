@@ -27,6 +27,7 @@
         self.dotAnnotationSize = CGSizeMake(16, 16);
         self.pulseAnimationDuration = 1;
         self.delayBetweenPulseCycles = 1;
+        self.annotationColor = [UIColor colorWithRed:0.082 green:0.369 blue:0.918 alpha:1];
     }
     return self;
 }
