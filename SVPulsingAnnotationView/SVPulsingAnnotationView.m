@@ -1,5 +1,5 @@
 //
-//  SPRealTimeVehicleAnnotationView.m
+//  SVPulsingAnnotationView.m
 //
 //  Created by Sam Vermette on 01.03.13.
 //  https://github.com/samvermette/SVPulsingAnnotationView
