@@ -42,6 +42,8 @@
     [self.mapView setRegion:region animated:NO];
     
     SVAnnotation *annotation = [[SVAnnotation alloc] initWithCoordinate:coordinate];
+    annotation.title = @"Current Location";
+    annotation.subtitle = @"Montréal, QC";
     [self.mapView addAnnotation:annotation];
 }
 
@@ -54,6 +56,7 @@
 		if(pulsingView == nil) {
 			pulsingView = [[SVPulsingAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifier];
             pulsingView.annotationColor = [UIColor colorWithRed:0.678431 green:0 blue:0 alpha:1];
+            pulsingView.canShowCallout = YES;
         }
 		
 		return pulsingView;
