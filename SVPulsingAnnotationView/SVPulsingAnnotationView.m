@@ -23,6 +23,7 @@
 - (id)initWithAnnotation:(id<MKAnnotation>)annotation reuseIdentifier:(NSString *)reuseIdentifier {
     if(self = [super initWithAnnotation:annotation reuseIdentifier:reuseIdentifier]) {
         self.layer.anchorPoint = CGPointMake(0.5, 0.5);
+        self.calloutOffset = CGPointMake(0, 4);
         self.bounds = CGRectMake(0, 0, 23, 23);
         self.dotAnnotationSize = CGSizeMake(16, 16);
         self.pulseAnimationDuration = 1;
