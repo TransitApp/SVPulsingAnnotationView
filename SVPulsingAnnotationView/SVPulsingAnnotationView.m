@@ -106,7 +106,8 @@
         animationGroup.duration = self.pulseAnimationDuration + self.delayBetweenPulseCycles;
         animationGroup.repeatCount = INFINITY;
         animationGroup.timingFunction = linear;
-        
+        animationGroup.removedOnCompletion = NO;
+
         CAKeyframeAnimation *imageAnimation = [CAKeyframeAnimation animationWithKeyPath:@"contents"];
         imageAnimation.values = @[
                                   (id)[[self haloImageWithRadius:20] CGImage],
