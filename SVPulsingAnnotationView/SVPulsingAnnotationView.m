@@ -45,8 +45,20 @@
 }
 
 - (void)willMoveToSuperview:(UIView *)newSuperview {
-    if(newSuperview)
+    if(newSuperview) {
         [self rebuildLayers];
+        [self popIn];
+    }
+}
+
+- (void)popIn {
+    CAKeyframeAnimation *bounceAnimation = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"];
+    CAMediaTimingFunction *easeInOut = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    
+    bounceAnimation.values = @[@0.05, @1.25, @0.8, @1.1, @0.9, @1.0];
+    bounceAnimation.duration = 0.3;
+    bounceAnimation.timingFunctions = @[easeInOut, easeInOut, easeInOut, easeInOut, easeInOut, easeInOut];
+    [self.dotLayer addAnimation:bounceAnimation forKey:@"popIn"];
 }
 
 #pragma mark - Setters
