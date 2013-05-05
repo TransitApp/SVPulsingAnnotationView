@@ -52,8 +52,20 @@
 }
 
 - (void)willMoveToSuperview:(UIView *)newSuperview {
-    if(newSuperview)
+    if(newSuperview) {
         [self rebuildLayers];
+        [self popIn];
+    }
+}
+
+- (void)popIn {
+    CAKeyframeAnimation *bounceAnimation = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"];
+    CAMediaTimingFunction *easeInOut = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    
+    bounceAnimation.values = @[@0.05, @1.25, @0.8, @1.1, @0.9, @1.0];
+    bounceAnimation.duration = 0.3;
+    bounceAnimation.timingFunctions = @[easeInOut, easeInOut, easeInOut, easeInOut, easeInOut, easeInOut];
+    [self.dotLayer addAnimation:bounceAnimation forKey:@"popIn"];
 }
 
 #pragma mark - Setters
@@ -105,42 +117,46 @@
         _haloLayer.position = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
         _haloLayer.contentsScale = [UIScreen mainScreen].scale;
 
-        CAMediaTimingFunction *linear = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
-        CAMediaTimingFunction *easeIn = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
-        CAMediaTimingFunction *easeOut = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
-        
-        CAAnimationGroup *animationGroup = [CAAnimationGroup animation];
-        animationGroup.duration = self.pulseAnimationDuration + self.delayBetweenPulseCycles;
-        animationGroup.repeatCount = INFINITY;
-        animationGroup.timingFunction = linear;
-        animationGroup.removedOnCompletion = NO;
-
-        CAKeyframeAnimation *imageAnimation = [CAKeyframeAnimation animationWithKeyPath:@"contents"];
-        imageAnimation.values = @[
-                                  (id)[[self haloImageWithRadius:20] CGImage],
-                                  (id)[[self haloImageWithRadius:35] CGImage],
-                                  (id)[[self haloImageWithRadius:50] CGImage]
-                                  ];
-        imageAnimation.duration = self.pulseAnimationDuration;
-        imageAnimation.calculationMode = kCAAnimationDiscrete;
-        
-        CABasicAnimation *pulseAnimation = [CABasicAnimation animationWithKeyPath:@"transform.scale.xy"];
-        pulseAnimation.fromValue = @0.0;
-        pulseAnimation.toValue = @1.0;
-        pulseAnimation.duration = self.pulseAnimationDuration;
-        pulseAnimation.timingFunction = easeOut;
-        
-        CABasicAnimation *fadeOutAnim = [CABasicAnimation animationWithKeyPath:@"opacity"];
-        fadeOutAnim.fromValue = @1.0;
-        fadeOutAnim.toValue = @0.0;
-        fadeOutAnim.duration = self.pulseAnimationDuration;
-        fadeOutAnim.timingFunction = easeIn;
-        fadeOutAnim.removedOnCompletion = NO;
-        fadeOutAnim.fillMode = kCAFillModeForwards;
-        
-        animationGroup.animations = @[imageAnimation, pulseAnimation, fadeOutAnim];
-        
-        [_haloLayer addAnimation:animationGroup forKey:@"pulse"];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
+            CAMediaTimingFunction *linear = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+            CAMediaTimingFunction *easeIn = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
+            CAMediaTimingFunction *easeOut = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
+            
+            CAAnimationGroup *animationGroup = [CAAnimationGroup animation];
+            animationGroup.duration = self.pulseAnimationDuration + self.delayBetweenPulseCycles;
+            animationGroup.repeatCount = INFINITY;
+            animationGroup.timingFunction = linear;
+            animationGroup.removedOnCompletion = NO;
+            
+            CAKeyframeAnimation *imageAnimation = [CAKeyframeAnimation animationWithKeyPath:@"contents"];
+            imageAnimation.values = @[
+                                      (id)[[self haloImageWithRadius:20] CGImage],
+                                      (id)[[self haloImageWithRadius:35] CGImage],
+                                      (id)[[self haloImageWithRadius:50] CGImage]
+                                      ];
+            imageAnimation.duration = self.pulseAnimationDuration;
+            imageAnimation.calculationMode = kCAAnimationDiscrete;
+            
+            CABasicAnimation *pulseAnimation = [CABasicAnimation animationWithKeyPath:@"transform.scale.xy"];
+            pulseAnimation.fromValue = @0.0;
+            pulseAnimation.toValue = @1.0;
+            pulseAnimation.duration = self.pulseAnimationDuration;
+            pulseAnimation.timingFunction = easeOut;
+            
+            CABasicAnimation *fadeOutAnim = [CABasicAnimation animationWithKeyPath:@"opacity"];
+            fadeOutAnim.fromValue = @1.0;
+            fadeOutAnim.toValue = @0.0;
+            fadeOutAnim.duration = self.pulseAnimationDuration;
+            fadeOutAnim.timingFunction = easeIn;
+            fadeOutAnim.removedOnCompletion = NO;
+            fadeOutAnim.fillMode = kCAFillModeForwards;
+            
+            animationGroup.animations = @[imageAnimation, pulseAnimation, fadeOutAnim];
+            
+            dispatch_async(dispatch_get_main_queue(), ^(void) {
+                [_haloLayer addAnimation:animationGroup forKey:@"pulse"];
+            });
+        });
     }
     return _haloLayer;
 }
