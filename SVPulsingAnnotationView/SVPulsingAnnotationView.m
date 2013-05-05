@@ -20,6 +20,13 @@
 
 @synthesize annotation = _annotation;
 
++ (NSMutableDictionary*)cachedRingImages {
+    static NSMutableDictionary *cachedRingLayers = nil;
+    static dispatch_once_t oncePredicate;
+    dispatch_once(&oncePredicate, ^{ cachedRingLayers = [NSMutableDictionary new]; });
+    return cachedRingLayers;
+}
+
 - (id)initWithAnnotation:(id<MKAnnotation>)annotation reuseIdentifier:(NSString *)reuseIdentifier {
     if(self = [super initWithAnnotation:annotation reuseIdentifier:reuseIdentifier]) {
         self.layer.anchorPoint = CGPointMake(0.5, 0.5);
@@ -142,30 +149,36 @@
 #pragma mark - CG Drawing
 
 - (UIImage*)haloImageWithRadius:(CGFloat)radius {
-    CGFloat glowRadius = radius/6;
-    CGFloat ringThickness = radius/24;
-    CGPoint center = CGPointMake(glowRadius+radius, glowRadius+radius);
-    CGRect imageBounds = CGRectMake(0, 0, center.x*2, center.y*2);
-    CGRect ringFrame = CGRectMake(glowRadius, glowRadius, radius*2, radius*2);
+    NSString *key = [NSString stringWithFormat:@"%@-%.0f", self.annotationColor, radius];
+    UIImage *ringImage = [[SVPulsingAnnotationView cachedRingImages] objectForKey:key];
     
-    UIGraphicsBeginImageContextWithOptions(imageBounds.size, NO, 0);
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    UIColor* ringColor = [UIColor whiteColor];
-    [ringColor setFill];
-    
-    UIBezierPath *ringPath = [UIBezierPath bezierPathWithOvalInRect:ringFrame];
-    [ringPath appendPath:[UIBezierPath bezierPathWithOvalInRect:CGRectInset(ringFrame, ringThickness, ringThickness)]];
-    ringPath.usesEvenOddFillRule = YES;
-    
-    for(float i=1.3; i>0.3; i-=0.18) {
-        CGFloat blurRadius = MIN(1, i)*glowRadius;
-        CGContextSetShadowWithColor(context, CGSizeZero, blurRadius, self.annotationColor.CGColor);
-        [ringPath fill];
+    if(!ringImage) {
+        CGFloat glowRadius = radius/6;
+        CGFloat ringThickness = radius/24;
+        CGPoint center = CGPointMake(glowRadius+radius, glowRadius+radius);
+        CGRect imageBounds = CGRectMake(0, 0, center.x*2, center.y*2);
+        CGRect ringFrame = CGRectMake(glowRadius, glowRadius, radius*2, radius*2);
+        
+        UIGraphicsBeginImageContextWithOptions(imageBounds.size, NO, 0);
+        CGContextRef context = UIGraphicsGetCurrentContext();
+        UIColor* ringColor = [UIColor whiteColor];
+        [ringColor setFill];
+        
+        UIBezierPath *ringPath = [UIBezierPath bezierPathWithOvalInRect:ringFrame];
+        [ringPath appendPath:[UIBezierPath bezierPathWithOvalInRect:CGRectInset(ringFrame, ringThickness, ringThickness)]];
+        ringPath.usesEvenOddFillRule = YES;
+        
+        for(float i=1.3; i>0.3; i-=0.18) {
+            CGFloat blurRadius = MIN(1, i)*glowRadius;
+            CGContextSetShadowWithColor(context, CGSizeZero, blurRadius, self.annotationColor.CGColor);
+            [ringPath fill];
+        }
+        
+        ringImage = UIGraphicsGetImageFromCurrentImageContext();
+        [[SVPulsingAnnotationView cachedRingImages] setObject:ringImage forKey:key];
+
+        UIGraphicsEndImageContext();
     }
-    
-    UIImage *ringImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
     return ringImage;
 }
 
