@@ -12,7 +12,6 @@
 
 @property (nonatomic, strong) CALayer *dotLayer;
 @property (nonatomic, strong) CALayer *haloLayer;
-@property (nonatomic, readwrite) CGSize dotAnnotationSize;
 
 @end
 
@@ -32,7 +31,6 @@
         self.layer.anchorPoint = CGPointMake(0.5, 0.5);
         self.calloutOffset = CGPointMake(0, 4);
         self.bounds = CGRectMake(0, 0, 23, 23);
-        self.dotAnnotationSize = CGSizeMake(16, 16);
         self.pulseAnimationDuration = 1;
         self.delayBetweenPulseCycles = 1;
         self.annotationColor = [UIColor colorWithRed:0.082 green:0.369 blue:0.918 alpha:1];
@@ -202,7 +200,7 @@
 
 
 - (UIImage*)dotAnnotationImage {
-    UIGraphicsBeginImageContextWithOptions(self.dotAnnotationSize, NO, 0);
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(16, 16), NO, 0);
 
     //// General Declarations
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
