@@ -283,6 +283,7 @@
 		22AE8E3816E41FBC009CF494 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SVPulsingAnnotationView/SVPulsingAnnotationView-Prefix.pch";
 				INFOPLIST_FILE = "SVPulsingAnnotationView/SVPulsingAnnotationView-Info.plist";
@@ -294,6 +295,7 @@
 		22AE8E3916E41FBC009CF494 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SVPulsingAnnotationView/SVPulsingAnnotationView-Prefix.pch";
 				INFOPLIST_FILE = "SVPulsingAnnotationView/SVPulsingAnnotationView-Info.plist";
