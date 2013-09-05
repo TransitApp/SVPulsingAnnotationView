@@ -45,7 +45,7 @@
         
         if(self.shouldBeFlat) {
             self.bounds = CGRectMake(0, 0, 22, 22);
-            self.pulseAnimationDuration = 2;
+            self.pulseAnimationDuration = 1.5;
             self.delayBetweenPulseCycles = 1;
             self.annotationColor = [UIColor colorWithRed:0.000 green:0.478 blue:1.000 alpha:1];
         }
@@ -154,32 +154,38 @@
 - (CALayer*)colorDotLayer {
     if(!_colorDotLayer) {
         _colorDotLayer = [CALayer layer];
-        _colorDotLayer.bounds = self.bounds;
-        _colorDotLayer.contents = (id)[self circleImageWithColor:self.annotationColor height:15].CGImage;
+        _colorDotLayer.bounds = CGRectMake(0, 0, 16, 16);
+        _colorDotLayer.allowsGroupOpacity = YES;
+        _colorDotLayer.backgroundColor = self.annotationColor.CGColor;
+        _colorDotLayer.cornerRadius = 8;
         _colorDotLayer.position = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
-        _colorDotLayer.contentsGravity = kCAGravityCenter;
-        _colorDotLayer.contentsScale = [UIScreen mainScreen].scale;
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
             CAMediaTimingFunction *linear = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
-            CAMediaTimingFunction *easeInEaseOut = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
             
             if(self.delayBetweenPulseCycles != INFINITY) {
                 CAAnimationGroup *animationGroup = [CAAnimationGroup animation];
                 animationGroup.duration = self.pulseAnimationDuration;
                 animationGroup.repeatCount = INFINITY;
                 animationGroup.timingFunction = linear;
-                
+                animationGroup.removedOnCompletion = NO;
+                animationGroup.autoreverses = YES;
+                animationGroup.beginTime = 1;
+                animationGroup.speed = 1;
+                animationGroup.fillMode = kCAFillModeBoth;
+
                 CABasicAnimation *pulseAnimation = [CABasicAnimation animationWithKeyPath:@"transform.scale.xy"];
                 pulseAnimation.fromValue = @1;
-                pulseAnimation.toValue = @0.76;
-                pulseAnimation.duration = self.pulseAnimationDuration/2;
-                pulseAnimation.timingFunction = easeInEaseOut;
-                pulseAnimation.autoreverses = YES;
-                animationGroup.removedOnCompletion = NO;
+                pulseAnimation.toValue = @0.8;
+                pulseAnimation.duration = self.pulseAnimationDuration;
                 
-                animationGroup.animations = @[pulseAnimation];
+                CABasicAnimation *opacityAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
+                opacityAnimation.fromValue = @1;
+                opacityAnimation.toValue = @0.8;
+                opacityAnimation.duration = self.pulseAnimationDuration;
                 
+                animationGroup.animations = @[pulseAnimation, opacityAnimation];
+
                 dispatch_async(dispatch_get_main_queue(), ^(void) {
                     [_colorDotLayer addAnimation:animationGroup forKey:@"pulse"];
                 });
