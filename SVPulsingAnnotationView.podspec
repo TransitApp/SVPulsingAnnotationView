@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name            = 'SVPulsingAnnotationView'
-  s.version         = '0.2'
+  s.version         = '0.3'
   s.license         = 'MIT'
   s.platform        = :ios
   s.summary         = 'A customizable MKUserLocationView replica for your iOS app.'
