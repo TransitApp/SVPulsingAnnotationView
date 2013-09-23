@@ -46,12 +46,14 @@
         if(self.shouldBeFlat) {
             self.bounds = CGRectMake(0, 0, 22, 22);
             self.pulseAnimationDuration = 1.5;
-            self.delayBetweenPulseCycles = 1;
+            self.outerPulseAnimationDuration = 3;
+            self.delayBetweenPulseCycles = 0;
             self.annotationColor = [UIColor colorWithRed:0.000 green:0.478 blue:1.000 alpha:1];
         }
         else {
             self.bounds = CGRectMake(0, 0, 23, 23);
             self.pulseAnimationDuration = 1;
+            self.outerPulseAnimationDuration = 1;
             self.delayBetweenPulseCycles = 1;
             self.annotationColor = [UIColor colorWithRed:0.082 green:0.369 blue:0.918 alpha:1];
         }
@@ -131,6 +133,62 @@
         [self rebuildLayers];
 }
 
+- (CAAnimationGroup*)pulseAnimationGroup {
+    if(!_pulseAnimationGroup) {
+        CAMediaTimingFunction *defaultCurve = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionDefault];
+        
+        _pulseAnimationGroup = [CAAnimationGroup animation];
+        _pulseAnimationGroup.duration = self.outerPulseAnimationDuration + self.delayBetweenPulseCycles;
+        _pulseAnimationGroup.repeatCount = INFINITY;
+        _pulseAnimationGroup.removedOnCompletion = NO;
+        _pulseAnimationGroup.timingFunction = defaultCurve;
+        
+        NSMutableArray *animations = [NSMutableArray new];
+        
+        if(!self.shouldBeFlat) {
+            CAKeyframeAnimation *imageAnimation = [CAKeyframeAnimation animationWithKeyPath:@"contents"];
+            imageAnimation.duration = self.pulseAnimationDuration;
+            imageAnimation.calculationMode = kCAAnimationDiscrete;
+            imageAnimation.values = @[
+                                      (id)[[self haloImageWithRadius:20] CGImage],
+                                      (id)[[self haloImageWithRadius:35] CGImage],
+                                      (id)[[self haloImageWithRadius:50] CGImage]
+                                      ];
+            [animations addObject:imageAnimation];
+        }
+        
+        
+        CABasicAnimation *pulseAnimation = [CABasicAnimation animationWithKeyPath:@"transform.scale.xy"];
+        pulseAnimation.fromValue = @0.0;
+        pulseAnimation.toValue = @1.0;
+        pulseAnimation.duration = self.outerPulseAnimationDuration;
+        [animations addObject:pulseAnimation];
+        
+        
+        if(!self.shouldBeFlat) {
+            CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"opacity"];
+            animation.fromValue = @1.0;
+            animation.toValue = @0.0;
+            animation.duration = self.outerPulseAnimationDuration;
+            animation.timingFunction = defaultCurve;
+            animation.removedOnCompletion = NO;
+            animation.fillMode = kCAFillModeForwards;
+            [animations addObject:animation];
+        }
+        else {
+            CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"opacity"];
+            animation.duration = self.outerPulseAnimationDuration;
+            animation.values = @[@0.45, @0.45, @0];
+            animation.keyTimes = @[@0, @0.2, @1];
+            animation.removedOnCompletion = NO;
+            [animations addObject:animation];
+        }
+        
+        _pulseAnimationGroup.animations = animations;
+    }
+    return _pulseAnimationGroup;
+}
+
 #pragma mark - iOS 7
 
 - (CALayer*)whiteDotLayer {
@@ -161,27 +219,28 @@
         _colorDotLayer.position = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
-            CAMediaTimingFunction *linear = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
             
             if(self.delayBetweenPulseCycles != INFINITY) {
+                CAMediaTimingFunction *defaultCurve = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionDefault];
+
                 CAAnimationGroup *animationGroup = [CAAnimationGroup animation];
                 animationGroup.duration = self.pulseAnimationDuration;
                 animationGroup.repeatCount = INFINITY;
-                animationGroup.timingFunction = linear;
                 animationGroup.removedOnCompletion = NO;
                 animationGroup.autoreverses = YES;
                 animationGroup.beginTime = 1;
+                animationGroup.timingFunction = defaultCurve;
                 animationGroup.speed = 1;
                 animationGroup.fillMode = kCAFillModeBoth;
 
                 CABasicAnimation *pulseAnimation = [CABasicAnimation animationWithKeyPath:@"transform.scale.xy"];
-                pulseAnimation.fromValue = @1;
-                pulseAnimation.toValue = @0.8;
+                pulseAnimation.fromValue = @0.8;
+                pulseAnimation.toValue = @1;
                 pulseAnimation.duration = self.pulseAnimationDuration;
                 
                 CABasicAnimation *opacityAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
-                opacityAnimation.fromValue = @1;
-                opacityAnimation.toValue = @0.8;
+                opacityAnimation.fromValue = @0.8;
+                opacityAnimation.toValue = @1;
                 opacityAnimation.duration = self.pulseAnimationDuration;
                 
                 animationGroup.animations = @[pulseAnimation, opacityAnimation];
@@ -199,9 +258,12 @@
 - (CALayer *)colorHaloLayer {
     if(!_colorHaloLayer) {
         _colorHaloLayer = [CALayer layer];
-        _colorHaloLayer.bounds = CGRectMake(0, 0, 100, 100);
+        _colorHaloLayer.bounds = CGRectMake(0, 0, 120, 120);
         _colorHaloLayer.position = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
         _colorHaloLayer.contentsScale = [UIScreen mainScreen].scale;
+        _colorHaloLayer.backgroundColor = self.annotationColor.CGColor;
+        _colorHaloLayer.cornerRadius = 60;
+        _colorHaloLayer.opacity = 0;
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
             if(self.delayBetweenPulseCycles != INFINITY) {
@@ -264,57 +326,6 @@
         });
     }
     return _glowingHaloLayer;
-}
-
-- (CAAnimationGroup*)pulseAnimationGroup {
-    if(!_pulseAnimationGroup) {
-        CAMediaTimingFunction *linear = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
-        CAMediaTimingFunction *easeIn = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
-        CAMediaTimingFunction *easeOut = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
-        
-        _pulseAnimationGroup = [CAAnimationGroup animation];
-        _pulseAnimationGroup.duration = self.pulseAnimationDuration + self.delayBetweenPulseCycles;
-        _pulseAnimationGroup.repeatCount = INFINITY;
-        _pulseAnimationGroup.timingFunction = linear;
-        _pulseAnimationGroup.removedOnCompletion = NO;
-        
-        CAKeyframeAnimation *imageAnimation = [CAKeyframeAnimation animationWithKeyPath:@"contents"];
-        
-        if(self.shouldBeFlat) {
-            UIColor *haloColor = [self.annotationColor colorWithAlphaComponent:0.5];
-            imageAnimation.values = @[
-                                      (id)[[self circleImageWithColor:haloColor height:40] CGImage],
-                                      (id)[[self circleImageWithColor:haloColor height:70] CGImage],
-                                      (id)[[self circleImageWithColor:haloColor height:100] CGImage]
-                                      ];
-        }
-        else {
-            imageAnimation.values = @[
-                                      (id)[[self haloImageWithRadius:20] CGImage],
-                                      (id)[[self haloImageWithRadius:35] CGImage],
-                                      (id)[[self haloImageWithRadius:50] CGImage]
-                                      ];
-        }
-        imageAnimation.duration = self.pulseAnimationDuration;
-        imageAnimation.calculationMode = kCAAnimationDiscrete;
-        
-        CABasicAnimation *pulseAnimation = [CABasicAnimation animationWithKeyPath:@"transform.scale.xy"];
-        pulseAnimation.fromValue = @0.0;
-        pulseAnimation.toValue = @1.0;
-        pulseAnimation.duration = self.pulseAnimationDuration;
-        pulseAnimation.timingFunction = easeOut;
-        
-        CABasicAnimation *fadeOutAnim = [CABasicAnimation animationWithKeyPath:@"opacity"];
-        fadeOutAnim.fromValue = @1.0;
-        fadeOutAnim.toValue = @0.0;
-        fadeOutAnim.duration = self.pulseAnimationDuration;
-        fadeOutAnim.timingFunction = easeIn;
-        fadeOutAnim.removedOnCompletion = NO;
-        fadeOutAnim.fillMode = kCAFillModeForwards;
-        
-        _pulseAnimationGroup.animations = @[imageAnimation, pulseAnimation, fadeOutAnim];
-    }
-    return _pulseAnimationGroup;
 }
 
 - (UIImage*)haloImageWithRadius:(CGFloat)radius {

@@ -11,6 +11,7 @@
 
 @property (nonatomic, strong) UIColor *annotationColor; // default is same as MKUserLocationView
 @property (nonatomic, readwrite) NSTimeInterval pulseAnimationDuration; // default is 1s
+@property (nonatomic, readwrite) NSTimeInterval outerPulseAnimationDuration; // default is 3s
 @property (nonatomic, readwrite) NSTimeInterval delayBetweenPulseCycles; // default is 1s
 
 @end
