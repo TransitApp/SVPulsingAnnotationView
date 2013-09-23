@@ -213,7 +213,9 @@
     if(!_colorDotLayer) {
         _colorDotLayer = [CALayer layer];
         _colorDotLayer.bounds = CGRectMake(0, 0, 16, 16);
+#if __IPHONE_OS_VERSION_MIN_REQUIRED >= 70000
         _colorDotLayer.allowsGroupOpacity = YES;
+#endif        
         _colorDotLayer.backgroundColor = self.annotationColor.CGColor;
         _colorDotLayer.cornerRadius = 8;
         _colorDotLayer.position = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
