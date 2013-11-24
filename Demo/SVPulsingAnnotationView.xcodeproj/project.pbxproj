@@ -22,6 +22,7 @@
 		22AE8E4116E420C4009CF494 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22AE8E4016E420C3009CF494 /* MapKit.framework */; };
 		22AE8E4316E42248009CF494 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22AE8E4216E42248009CF494 /* CoreLocation.framework */; };
 		22AE8E4816E48F2E009CF494 /* SVAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 22AE8E4716E48F2E009CF494 /* SVAnnotation.m */; };
+		22B6538418429E1100F8519D /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 22B6538318429E1100F8519D /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +48,7 @@
 		22AE8E4216E42248009CF494 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		22AE8E4616E48F2E009CF494 /* SVAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVAnnotation.h; sourceTree = "<group>"; };
 		22AE8E4716E48F2E009CF494 /* SVAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVAnnotation.m; sourceTree = "<group>"; };
+		22B6538318429E1100F8519D /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +71,7 @@
 		22AE8E0B16E41FBC009CF494 = {
 			isa = PBXGroup;
 			children = (
+				22B6538318429E1100F8519D /* README.md */,
 				22AE8E1D16E41FBC009CF494 /* Demo */,
 				22AE8E3A16E42052009CF494 /* SVPulsingAnnotationView */,
 				22AE8E1616E41FBC009CF494 /* Frameworks */,
@@ -190,6 +193,7 @@
 			files = (
 				22AE8E2216E41FBC009CF494 /* InfoPlist.strings in Resources */,
 				22AE8E2A16E41FBC009CF494 /* Default.png in Resources */,
+				22B6538418429E1100F8519D /* README.md in Resources */,
 				22AE8E2C16E41FBC009CF494 /* Default@2x.png in Resources */,
 				22AE8E2E16E41FBC009CF494 /* Default-568h@2x.png in Resources */,
 			);
@@ -287,6 +291,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SVPulsingAnnotationView/SVPulsingAnnotationView-Prefix.pch";
 				INFOPLIST_FILE = "SVPulsingAnnotationView/SVPulsingAnnotationView-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -299,6 +304,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SVPulsingAnnotationView/SVPulsingAnnotationView-Prefix.pch";
 				INFOPLIST_FILE = "SVPulsingAnnotationView/SVPulsingAnnotationView-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
