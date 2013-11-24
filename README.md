@@ -6,13 +6,11 @@ SVPulsingAnnotationView is a customizable Core Graphics replica of Apple's `MKUs
 
 ## Installation
 
-### From CocoaPods
+### CocoaPods
 
-Add `pod 'SVPulsingAnnotationView'` to your Podfile or `pod 'SVPulsingAnnotationView', :head` if you're feeling adventurous.
+I'm not a big fan of CocoaPods, so tend to not keep it updated. If you really want to use SVPulsingAnnotationView with CocoaPods, I suggest you use `pod 'SVPulsingAnnotationView', :head` to pull from the `master` branch directly. I'm usually careful about what I push there and is the version I use myself in all my projects.
 
 ### Manually
-
-_**Important note if your project doesn't use ARC**: you must add the `-fobjc-arc` compiler flag to `SVPulsingAnnotationView.m` in Target Settings > Build Phases > Compile Sources._
 
 * Drag the `SVPulsingAnnotationView/SVPulsingAnnotationView` folder into your project. 
 * Add the **QuartzCore** and **MapKit** frameworks to your project.
