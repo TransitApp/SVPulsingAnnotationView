@@ -230,7 +230,6 @@
                 animationGroup.repeatCount = INFINITY;
                 animationGroup.removedOnCompletion = NO;
                 animationGroup.autoreverses = YES;
-                animationGroup.beginTime = 1;
                 animationGroup.timingFunction = defaultCurve;
                 animationGroup.speed = 1;
                 animationGroup.fillMode = kCAFillModeBoth;
