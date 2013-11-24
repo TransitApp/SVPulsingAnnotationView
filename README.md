@@ -2,7 +2,7 @@
 
 SVPulsingAnnotationView is a customizable Core Graphics replica of Apple's `MKUserLocationView`. 
 
-![SVPulsingAnnotationView](http://cl.ly/SdvI/download/SVPulsingAnnotationView.gif)
+![SVPulsingAnnotationView](http://cl.ly/Sdtk/download/SVPulsingAnnotationView.gif)
 
 ## Installation
 
