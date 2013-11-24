@@ -113,6 +113,7 @@
         float alpha = CGColorGetComponents(annotationColor.CGColor)[1];
         annotationColor = [UIColor colorWithRed:white green:white blue:white alpha:alpha];
     }
+    
     _annotationColor = annotationColor;
     
     if(self.superview)
@@ -131,6 +132,14 @@
     
     if(self.superview)
         [self rebuildLayers];
+}
+
+#pragma mark - Getters
+
+- (UIColor *)pulseColor {
+    if(!_pulseColor)
+        return self.annotationColor;
+    return _pulseColor;
 }
 
 - (CAAnimationGroup*)pulseAnimationGroup {
@@ -262,7 +271,7 @@
         _colorHaloLayer.bounds = CGRectMake(0, 0, 120, 120);
         _colorHaloLayer.position = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
         _colorHaloLayer.contentsScale = [UIScreen mainScreen].scale;
-        _colorHaloLayer.backgroundColor = self.annotationColor.CGColor;
+        _colorHaloLayer.backgroundColor = self.pulseColor.CGColor;
         _colorHaloLayer.cornerRadius = 60;
         _colorHaloLayer.opacity = 0;
         
