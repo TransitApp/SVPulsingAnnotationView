@@ -174,17 +174,6 @@
     if(!_imageView) {
         _imageView = [[UIImageView alloc] initWithFrame:self.bounds];
         _imageView.contentMode = UIViewContentModeTopLeft;
-        
-        CAMediaTimingFunction *defaultCurve = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionDefault];
-        CABasicAnimation *opacityAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
-        opacityAnimation.repeatCount = INFINITY;
-        opacityAnimation.removedOnCompletion = NO;
-        opacityAnimation.autoreverses = YES;
-        opacityAnimation.timingFunction = defaultCurve;
-        opacityAnimation.fromValue = @0.8;
-        opacityAnimation.toValue = @1;
-        opacityAnimation.duration = self.pulseAnimationDuration;
-        [_imageView.layer addAnimation:opacityAnimation forKey:@"fade"];
     }
     return _imageView;
 }
@@ -193,7 +182,7 @@
     if(!_whiteDotLayer) {
         _whiteDotLayer = [CALayer layer];
         _whiteDotLayer.bounds = self.bounds;
-        _whiteDotLayer.contents = (id)[self circleImageWithColor:[UIColor whiteColor] height:22].CGImage;
+        _whiteDotLayer.contents = (id)[self circleImageWithColor:[UIColor whiteColor] height:self.bounds.size.height].CGImage;
         _whiteDotLayer.position = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
         _whiteDotLayer.contentsGravity = kCAGravityCenter;
         _whiteDotLayer.contentsScale = [UIScreen mainScreen].scale;
