@@ -58,6 +58,8 @@
     [_colorHaloLayer removeFromSuperlayer];
     _colorHaloLayer = nil;
     
+    _pulseAnimationGroup = nil;
+    
     if(!self.image) {
         [_imageView removeFromSuperview];
         _imageView = nil;
