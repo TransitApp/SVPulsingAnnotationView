@@ -39,6 +39,7 @@
         self.layer.anchorPoint = CGPointMake(0.5, 0.5);
         self.calloutOffset = CGPointMake(0, 4);
         self.bounds = CGRectMake(0, 0, 22, 22);
+        self.pulseScaleFactor = 5.3;
         self.pulseAnimationDuration = 1.5;
         self.outerPulseAnimationDuration = 3;
         self.delayBetweenPulseCycles = 0;
@@ -199,10 +200,11 @@
 - (CALayer*)colorDotLayer {
     if(!_colorDotLayer) {
         _colorDotLayer = [CALayer layer];
-        _colorDotLayer.bounds = CGRectMake(0, 0, 16, 16);
+        CGFloat width = self.bounds.size.width-6;
+        _colorDotLayer.bounds = CGRectMake(0, 0, width, width);
         _colorDotLayer.allowsGroupOpacity = YES;
         _colorDotLayer.backgroundColor = self.annotationColor.CGColor;
-        _colorDotLayer.cornerRadius = 8;
+        _colorDotLayer.cornerRadius = width/2;
         _colorDotLayer.position = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
@@ -244,11 +246,12 @@
 - (CALayer *)colorHaloLayer {
     if(!_colorHaloLayer) {
         _colorHaloLayer = [CALayer layer];
-        _colorHaloLayer.bounds = CGRectMake(0, 0, 120, 120);
+        CGFloat width = self.bounds.size.width*self.pulseScaleFactor;
+        _colorHaloLayer.bounds = CGRectMake(0, 0, width, width);
         _colorHaloLayer.position = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
         _colorHaloLayer.contentsScale = [UIScreen mainScreen].scale;
         _colorHaloLayer.backgroundColor = self.pulseColor.CGColor;
-        _colorHaloLayer.cornerRadius = 60;
+        _colorHaloLayer.cornerRadius = width/2;
         _colorHaloLayer.opacity = 0;
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
