@@ -12,6 +12,7 @@
 
 @property (nonatomic, strong) CALayer *shinyDotLayer;
 @property (nonatomic, strong) CALayer *glowingHaloLayer;
+@property (nonatomic, strong) UIImageView *imageView;
 
 @property (nonatomic, strong) CALayer *whiteDotLayer;
 @property (nonatomic, strong) CALayer *colorDotLayer;
@@ -24,6 +25,7 @@
 @implementation SVPulsingAnnotationView
 
 @synthesize annotation = _annotation;
+@synthesize image = _image;
 
 + (NSMutableDictionary*)cachedRingImages {
     static NSMutableDictionary *cachedRingLayers = nil;
@@ -55,9 +57,18 @@
     [_colorHaloLayer removeFromSuperlayer];
     _colorHaloLayer = nil;
     
+    if(!self.image) {
+        [_imageView removeFromSuperview];
+        _imageView = nil;
+    }
+    
     [self.layer addSublayer:self.colorHaloLayer];
     [self.layer addSublayer:self.whiteDotLayer];
-    [self.layer addSublayer:self.colorDotLayer];
+    
+    if(self.image)
+        [self addSubview:self.imageView];
+    else
+        [self.layer addSublayer:self.colorDotLayer];
 }
 
 - (void)willMoveToSuperview:(UIView *)newSuperview {
@@ -87,6 +98,7 @@
     }
     
     _annotationColor = annotationColor;
+    _imageView.tintColor = annotationColor;
     
     if(self.superview)
         [self rebuildLayers];
@@ -104,6 +116,18 @@
     
     if(self.superview)
         [self rebuildLayers];
+}
+
+- (void)setImage:(UIImage *)image {
+    _image = image;
+    
+    if(self.superview)
+        [self rebuildLayers];
+    
+    self.imageView.image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    self.imageView.bounds = CGRectMake(0, 0, ceil(image.size.width), ceil(image.size.height));
+    self.imageView.center = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
+    self.imageView.tintColor = self.annotationColor;
 }
 
 #pragma mark - Getters
@@ -145,6 +169,25 @@
 }
 
 #pragma mark - Graphics
+
+- (UIImageView *)imageView {
+    if(!_imageView) {
+        _imageView = [[UIImageView alloc] initWithFrame:self.bounds];
+        _imageView.contentMode = UIViewContentModeTopLeft;
+        
+        CAMediaTimingFunction *defaultCurve = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionDefault];
+        CABasicAnimation *opacityAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
+        opacityAnimation.repeatCount = INFINITY;
+        opacityAnimation.removedOnCompletion = NO;
+        opacityAnimation.autoreverses = YES;
+        opacityAnimation.timingFunction = defaultCurve;
+        opacityAnimation.fromValue = @0.8;
+        opacityAnimation.toValue = @1;
+        opacityAnimation.duration = self.pulseAnimationDuration;
+        [_imageView.layer addAnimation:opacityAnimation forKey:@"fade"];
+    }
+    return _imageView;
+}
 
 - (CALayer*)whiteDotLayer {
     if(!_whiteDotLayer) {
