@@ -44,6 +44,16 @@
         self.outerPulseAnimationDuration = 3;
         self.delayBetweenPulseCycles = 0;
         self.annotationColor = [UIColor colorWithRed:0.000 green:0.478 blue:1.000 alpha:1];
+        
+        self.willMoveToSuperviewAnimationBlock = ^(SVPulsingAnnotationView *annotationView, UIView *superview) {
+            CAKeyframeAnimation *bounceAnimation = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"];
+            CAMediaTimingFunction *easeInOut = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+            
+            bounceAnimation.values = @[@0.05, @1.25, @0.8, @1.1, @0.9, @1.0];
+            bounceAnimation.duration = 0.3;
+            bounceAnimation.timingFunctions = @[easeInOut, easeInOut, easeInOut, easeInOut, easeInOut, easeInOut];
+            [annotationView.layer addAnimation:bounceAnimation forKey:@"popIn"];
+        };
     }
     return self;
 }
@@ -74,11 +84,12 @@
         [self.layer addSublayer:self.colorDotLayer];
 }
 
-- (void)willMoveToSuperview:(UIView *)newSuperview {
-    if(newSuperview) {
+- (void)willMoveToSuperview:(UIView *)superview {
+    if(superview)
         [self rebuildLayers];
-        [self popIn];
-    }
+    
+    if(self.willMoveToSuperviewAnimationBlock)
+        self.willMoveToSuperviewAnimationBlock(self, superview);
 }
 
 - (void)popIn {
