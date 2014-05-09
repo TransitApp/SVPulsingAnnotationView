@@ -138,7 +138,7 @@
     if(self.superview)
         [self rebuildLayers];
     
-    self.imageView.image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    self.imageView.image = image;
     self.imageView.bounds = CGRectMake(0, 0, ceil(image.size.width), ceil(image.size.height));
     self.imageView.center = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
     self.imageView.tintColor = self.annotationColor;
