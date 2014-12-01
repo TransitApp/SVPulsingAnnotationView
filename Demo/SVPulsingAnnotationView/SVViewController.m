@@ -65,4 +65,18 @@
     return nil;
 }
 
+
+- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
+    
+    [((SVPulsingAnnotationView *)view) pausePulsing];
+    
+}
+
+- (void)mapView:(MKMapView *)mapView didDeselectAnnotationView:(MKAnnotationView *)view {
+    
+    [((SVPulsingAnnotationView *)view) resumePulsing];
+    
+}
+
+
 @end

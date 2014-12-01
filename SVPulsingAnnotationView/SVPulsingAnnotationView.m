@@ -58,6 +58,46 @@
     return self;
 }
 
+- (void)stopPulsing {
+    
+    [_whiteDotLayer removeAllAnimations];
+    [_colorDotLayer removeAllAnimations];
+    [_colorHaloLayer removeAllAnimations];
+}
+
+- (void)pausePulsing {
+    
+    [self pauseLayer:_whiteDotLayer];
+    [self pauseLayer:_colorDotLayer];
+    [self pauseLayer:_colorHaloLayer];
+    
+}
+
+- (void)resumePulsing {
+    
+    [self resumeLayer:_whiteDotLayer];
+    [self resumeLayer:_colorDotLayer];
+    [self resumeLayer:_colorHaloLayer];
+    
+}
+
+- (void)pauseLayer:(CALayer *)layer {
+    
+    CFTimeInterval pausedTime = [layer convertTime:CACurrentMediaTime() fromLayer:nil];
+    layer.speed = 0.0;
+    layer.timeOffset = pausedTime;
+}
+
+- (void)resumeLayer:(CALayer *)layer {
+    
+    CFTimeInterval pausedTime = [layer timeOffset];
+    layer.speed = 1.0;
+    layer.timeOffset = 0.0;
+    layer.beginTime = 0.0;
+    CFTimeInterval timeSincePause = [layer convertTime:CACurrentMediaTime() fromLayer:nil] - pausedTime;
+    layer.beginTime = timeSincePause;
+}
+
 - (void)rebuildLayers {
     [_whiteDotLayer removeFromSuperlayer];
     _whiteDotLayer = nil;
@@ -224,7 +264,7 @@
             
             if(self.delayBetweenPulseCycles != INFINITY) {
                 CAMediaTimingFunction *defaultCurve = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionDefault];
-
+                
                 CAAnimationGroup *animationGroup = [CAAnimationGroup animation];
                 animationGroup.duration = self.pulseAnimationDuration;
                 animationGroup.repeatCount = INFINITY;
@@ -233,7 +273,7 @@
                 animationGroup.timingFunction = defaultCurve;
                 animationGroup.speed = 1;
                 animationGroup.fillMode = kCAFillModeBoth;
-
+                
                 CABasicAnimation *pulseAnimation = [CABasicAnimation animationWithKeyPath:@"transform.scale.xy"];
                 pulseAnimation.fromValue = @0.8;
                 pulseAnimation.toValue = @1;
@@ -245,13 +285,13 @@
                 opacityAnimation.duration = self.pulseAnimationDuration;
                 
                 animationGroup.animations = @[pulseAnimation, opacityAnimation];
-
+                
                 dispatch_async(dispatch_get_main_queue(), ^(void) {
                     [_colorDotLayer addAnimation:animationGroup forKey:@"pulse"];
                 });
             }
         });
-
+        
     }
     return _colorDotLayer;
 }
