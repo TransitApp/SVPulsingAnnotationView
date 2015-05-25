@@ -12,6 +12,7 @@
 @property (nonatomic, strong) UIColor *annotationColor; // default is same as MKUserLocationView
 @property (nonatomic, strong) UIColor *pulseColor; // default is same as annotationColor
 @property (nonatomic, strong) UIImage *image; // default is nil
+@property (nonatomic, strong) UIImage *headingImage; // default is nil
 
 @property (nonatomic, readwrite) float pulseScaleFactor; // default is 5.3
 @property (nonatomic, readwrite) NSTimeInterval pulseAnimationDuration; // default is 1s

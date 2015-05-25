@@ -13,6 +13,7 @@
 @property (nonatomic, strong) CALayer *shinyDotLayer;
 @property (nonatomic, strong) CALayer *glowingHaloLayer;
 @property (nonatomic, strong) UIImageView *imageView;
+@property (nonatomic, strong) UIImageView *headingImageView;
 
 @property (nonatomic, strong) CALayer *whiteDotLayer;
 @property (nonatomic, strong) CALayer *colorDotLayer;
@@ -75,6 +76,14 @@
         _imageView = nil;
     }
     
+    if (self.headingImage) {
+        [self addSubview:self.headingImageView];
+    }
+    else {
+        [_headingImageView removeFromSuperview];
+        _headingImageView = nil;
+    }
+    
     [self.layer addSublayer:self.colorHaloLayer];
     [self.layer addSublayer:self.whiteDotLayer];
     
@@ -113,6 +122,7 @@
     
     _annotationColor = annotationColor;
     _imageView.tintColor = annotationColor;
+    _headingImageView.tintColor = annotationColor;
     
     if(self.superview)
         [self rebuildLayers];
@@ -142,6 +152,19 @@
     self.imageView.bounds = CGRectMake(0, 0, ceil(image.size.width), ceil(image.size.height));
     self.imageView.center = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
     self.imageView.tintColor = self.annotationColor;
+}
+
+- (void)setHeadingImage:(UIImage *)image {
+    _headingImage = image;
+    
+    if (self.superview) {
+        [self rebuildLayers];
+    }
+    
+    self.headingImageView.image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    self.headingImageView.bounds = CGRectMake(0, 0, ceil(image.size.width), ceil(image.size.height));
+    self.headingImageView.center = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
+    self.headingImageView.tintColor = self.annotationColor;
 }
 
 #pragma mark - Getters
@@ -190,6 +213,15 @@
         _imageView.contentMode = UIViewContentModeTopLeft;
     }
     return _imageView;
+}
+
+- (UIImageView *)headingImageView {
+    if (!_headingImageView) {
+        _headingImageView = [[UIImageView alloc] initWithFrame:self.bounds];
+        _headingImageView.contentMode = UIViewContentModeTopLeft;
+    }
+    
+    return _headingImageView;
 }
 
 - (CALayer*)whiteDotLayer {
