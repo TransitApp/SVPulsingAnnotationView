@@ -15,7 +15,7 @@
 @property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, strong) UIImageView *headingImageView;
 
-@property (nonatomic, strong) CALayer *whiteDotLayer;
+@property (nonatomic, strong) CALayer *outerDotLayer;
 @property (nonatomic, strong) CALayer *colorDotLayer;
 @property (nonatomic, strong) CALayer *colorHaloLayer;
 
@@ -45,6 +45,7 @@
         self.outerPulseAnimationDuration = 3;
         self.delayBetweenPulseCycles = 0;
         self.annotationColor = [UIColor colorWithRed:0.000 green:0.478 blue:1.000 alpha:1];
+        self.outerColor = [UIColor whiteColor];
         
         self.willMoveToSuperviewAnimationBlock = ^(SVPulsingAnnotationView *annotationView, UIView *superview) {
             CAKeyframeAnimation *bounceAnimation = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"];
@@ -60,8 +61,8 @@
 }
 
 - (void)rebuildLayers {
-    [_whiteDotLayer removeFromSuperlayer];
-    _whiteDotLayer = nil;
+    [_outerDotLayer removeFromSuperlayer];
+    _outerDotLayer = nil;
     
     [_colorDotLayer removeFromSuperlayer];
     _colorDotLayer = nil;
@@ -85,7 +86,7 @@
     }
     
     [self.layer addSublayer:self.colorHaloLayer];
-    [self.layer addSublayer:self.whiteDotLayer];
+    [self.layer addSublayer:self.outerDotLayer];
     
     if(self.image)
         [self addSubview:self.imageView];
@@ -224,22 +225,22 @@
     return _headingImageView;
 }
 
-- (CALayer*)whiteDotLayer {
-    if(!_whiteDotLayer) {
-        _whiteDotLayer = [CALayer layer];
-        _whiteDotLayer.bounds = self.bounds;
-        _whiteDotLayer.contents = (id)[self circleImageWithColor:[UIColor whiteColor] height:self.bounds.size.height].CGImage;
-        _whiteDotLayer.position = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
-        _whiteDotLayer.contentsGravity = kCAGravityCenter;
-        _whiteDotLayer.contentsScale = [UIScreen mainScreen].scale;
-        _whiteDotLayer.shadowColor = [UIColor blackColor].CGColor;
-        _whiteDotLayer.shadowOffset = CGSizeMake(0, 2);
-        _whiteDotLayer.shadowRadius = 3;
-        _whiteDotLayer.shadowOpacity = 0.3;
-        _whiteDotLayer.shouldRasterize = YES;
-        _whiteDotLayer.rasterizationScale = [UIScreen mainScreen].scale;
+- (CALayer*)outerDotLayer {
+    if(!_outerDotLayer) {
+        _outerDotLayer = [CALayer layer];
+        _outerDotLayer.bounds = self.bounds;
+        _outerDotLayer.contents = (id)[self circleImageWithColor:self.outerColor height:self.bounds.size.height].CGImage;
+        _outerDotLayer.position = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
+        _outerDotLayer.contentsGravity = kCAGravityCenter;
+        _outerDotLayer.contentsScale = [UIScreen mainScreen].scale;
+        _outerDotLayer.shadowColor = [UIColor blackColor].CGColor;
+        _outerDotLayer.shadowOffset = CGSizeMake(0, 2);
+        _outerDotLayer.shadowRadius = 3;
+        _outerDotLayer.shadowOpacity = 0.3;
+        _outerDotLayer.shouldRasterize = YES;
+        _outerDotLayer.rasterizationScale = [UIScreen mainScreen].scale;
     }
-    return _whiteDotLayer;
+    return _outerDotLayer;
 }
 
 - (CALayer*)colorDotLayer {
