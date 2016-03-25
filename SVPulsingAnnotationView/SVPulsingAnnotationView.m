@@ -46,6 +46,7 @@
         self.delayBetweenPulseCycles = 0;
         self.annotationColor = [UIColor colorWithRed:0.000 green:0.478 blue:1.000 alpha:1];
         self.outerColor = [UIColor whiteColor];
+        self.setImagesAsTemplate = YES;
         
         self.willMoveToSuperviewAnimationBlock = ^(SVPulsingAnnotationView *annotationView, UIView *superview) {
             CAKeyframeAnimation *bounceAnimation = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"];
@@ -149,7 +150,7 @@
     if(self.superview)
         [self rebuildLayers];
     
-    self.imageView.image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    self.imageView.image = self.setImagesAsTemplate ? [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] : image;
     self.imageView.bounds = CGRectMake(0, 0, ceil(image.size.width), ceil(image.size.height));
     self.imageView.center = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
     self.imageView.tintColor = self.annotationColor;
@@ -162,7 +163,7 @@
         [self rebuildLayers];
     }
     
-    self.headingImageView.image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    self.headingImageView.image = self.setImagesAsTemplate ? [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] : image;
     self.headingImageView.bounds = CGRectMake(0, 0, ceil(image.size.width), ceil(image.size.height));
     self.headingImageView.center = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
     self.headingImageView.tintColor = self.annotationColor;
