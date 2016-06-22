@@ -146,12 +146,18 @@
 - (void)setImage:(UIImage *)image {
     _image = image;
     
-    if(self.superview)
+    if (self.superview) {
         [self rebuildLayers];
+    }
+    
+    CGFloat imageWidth = ceil(image.size.width);
+    CGFloat imageHeight = ceil(image.size.height);
     
     self.imageView.image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    self.imageView.bounds = CGRectMake(0, 0, ceil(image.size.width), ceil(image.size.height));
-    self.imageView.center = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
+    self.imageView.frame = CGRectMake(floor((self.bounds.size.width - imageWidth) * 0.5),
+                                      floor((self.bounds.size.height - imageHeight) * 0.5),
+                                      imageWidth,
+                                      imageHeight);
     self.imageView.tintColor = self.annotationColor;
 }
 
@@ -162,9 +168,14 @@
         [self rebuildLayers];
     }
     
+    CGFloat imageWidth = ceil(image.size.width);
+    CGFloat imageHeight = ceil(image.size.height);
+    
     self.headingImageView.image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    self.headingImageView.bounds = CGRectMake(0, 0, ceil(image.size.width), ceil(image.size.height));
-    self.headingImageView.center = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
+    self.headingImageView.frame = CGRectMake(floor((self.bounds.size.width - imageWidth) * 0.5),
+                                             floor((self.bounds.size.height - imageHeight) * 0.5),
+                                             imageWidth,
+                                             imageHeight);
     self.headingImageView.tintColor = self.annotationColor;
 }
 
