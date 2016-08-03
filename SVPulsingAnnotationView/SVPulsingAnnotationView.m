@@ -12,7 +12,6 @@
 
 @property (nonatomic, strong) CALayer *shinyDotLayer;
 @property (nonatomic, strong) CALayer *glowingHaloLayer;
-@property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, strong) UIImageView *headingImageView;
 
 @property (nonatomic, strong) CALayer *outerDotLayer;
