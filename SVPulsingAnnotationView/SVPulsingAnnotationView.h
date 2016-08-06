@@ -16,6 +16,7 @@
 @property (nonatomic, strong) UIImage *headingImage; // default is nil
 @property (nonatomic, strong) UIImageView *imageView;
 
+@property (nonatomic, readwrite) float outerDotAlpha; // default is 1
 @property (nonatomic, readwrite) float pulseScaleFactor; // default is 5.3
 @property (nonatomic, readwrite) NSTimeInterval pulseAnimationDuration; // default is 1s
 @property (nonatomic, readwrite) NSTimeInterval outerPulseAnimationDuration; // default is 3s

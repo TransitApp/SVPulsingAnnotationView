@@ -45,6 +45,7 @@
         self.delayBetweenPulseCycles = 0;
         self.annotationColor = [UIColor colorWithRed:0.000 green:0.478 blue:1.000 alpha:1];
         self.outerColor = [UIColor whiteColor];
+        self.outerDotAlpha = 1;
         
         self.willMoveToSuperviewAnimationBlock = ^(SVPulsingAnnotationView *annotationView, UIView *superview) {
             CAKeyframeAnimation *bounceAnimation = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"];
@@ -247,8 +248,7 @@
         _outerDotLayer.shadowOffset = CGSizeMake(0, 2);
         _outerDotLayer.shadowRadius = 3;
         _outerDotLayer.shadowOpacity = 0.3;
-        _outerDotLayer.shouldRasterize = YES;
-        _outerDotLayer.rasterizationScale = [UIScreen mainScreen].scale;
+        _outerDotLayer.opacity = self.outerDotAlpha;
     }
     return _outerDotLayer;
 }
