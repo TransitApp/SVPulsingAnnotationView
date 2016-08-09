@@ -24,16 +24,6 @@
 
 @implementation SVPulsingAnnotationView
 
-@synthesize annotation = _annotation;
-@synthesize image = _image;
-
-+ (NSMutableDictionary*)cachedRingImages {
-    static NSMutableDictionary *cachedRingLayers = nil;
-    static dispatch_once_t oncePredicate;
-    dispatch_once(&oncePredicate, ^{ cachedRingLayers = [NSMutableDictionary new]; });
-    return cachedRingLayers;
-}
-
 - (id)initWithAnnotation:(id<MKAnnotation>)annotation reuseIdentifier:(NSString *)reuseIdentifier {
     if(self = [super initWithAnnotation:annotation reuseIdentifier:reuseIdentifier]) {
         self.layer.anchorPoint = CGPointMake(0.5, 0.5);
@@ -72,11 +62,6 @@
     
     _pulseAnimationGroup = nil;
     
-    if(!self.image) {
-        [_imageView removeFromSuperview];
-        _imageView = nil;
-    }
-    
     if (self.headingImage) {
         [self addSubview:self.headingImageView];
     }
@@ -87,14 +72,13 @@
     
     [self.layer addSublayer:self.colorHaloLayer];
     [self.layer addSublayer:self.outerDotLayer];
-    
-    if(self.image)
-        [self addSubview:self.imageView];
-    else
+
+    if(!self.image)
         [self.layer addSublayer:self.colorDotLayer];
 }
 
 - (void)willMoveToSuperview:(UIView *)superview {
+    [super willMoveToSuperview:superview];
     if(superview)
         [self rebuildLayers];
     
@@ -122,7 +106,6 @@
     }
     
     _annotationColor = annotationColor;
-    _imageView.tintColor = annotationColor;
     _headingImageView.tintColor = annotationColor;
     
     if(self.superview)
@@ -144,21 +127,11 @@
 }
 
 - (void)setImage:(UIImage *)image {
-    _image = image;
+    [super setImage:image];
     
     if (self.superview) {
         [self rebuildLayers];
     }
-    
-    CGFloat imageWidth = ceil(image.size.width);
-    CGFloat imageHeight = ceil(image.size.height);
-    
-    self.imageView.image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    self.imageView.frame = CGRectMake(floor((self.bounds.size.width - imageWidth) * 0.5),
-                                      floor((self.bounds.size.height - imageHeight) * 0.5),
-                                      imageWidth,
-                                      imageHeight);
-    self.imageView.tintColor = self.annotationColor;
 }
 
 - (void)setHeadingImage:(UIImage *)image {
@@ -218,14 +191,6 @@
 }
 
 #pragma mark - Graphics
-
-- (UIImageView *)imageView {
-    if(!_imageView) {
-        _imageView = [[UIImageView alloc] initWithFrame:self.bounds];
-        _imageView.contentMode = UIViewContentModeTopLeft;
-    }
-    return _imageView;
-}
 
 - (UIImageView *)headingImageView {
     if (!_headingImageView) {
