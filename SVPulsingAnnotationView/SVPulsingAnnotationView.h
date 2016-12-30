@@ -24,4 +24,8 @@
 
 @property (nonatomic, copy) void (^willMoveToSuperviewAnimationBlock)(SVPulsingAnnotationView *view, UIView *superview); // default is pop animation
 
+- (void)stopPulsing;
+- (void)pausePulsing;
+- (void)resumePulsing;
+
 @end
