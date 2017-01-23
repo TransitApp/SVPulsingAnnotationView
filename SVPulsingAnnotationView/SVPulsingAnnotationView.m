@@ -59,7 +59,6 @@
 }
 
 - (void)rebuildLayers {
-    self.pulseAnimationGroup.animations = nil;
     [self.layer removeAllAnimations];
     
     [_outerDotLayer removeFromSuperlayer];
