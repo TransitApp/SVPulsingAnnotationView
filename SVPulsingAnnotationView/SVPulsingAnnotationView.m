@@ -247,6 +247,8 @@
         _outerDotLayer.shadowRadius = 3;
         _outerDotLayer.shadowOpacity = 0.3;
         _outerDotLayer.opacity = self.outerDotAlpha;
+        _outerDotLayer.shouldRasterize = YES;
+        _outerDotLayer.rasterizationScale = UIScreen.mainScreen.scale;
     }
     return _outerDotLayer;
 }
@@ -260,6 +262,8 @@
         _colorDotLayer.backgroundColor = self.annotationColor.CGColor;
         _colorDotLayer.cornerRadius = width/2;
         _colorDotLayer.position = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
+        _colorDotLayer.shouldRasterize = YES;
+        _colorDotLayer.rasterizationScale = UIScreen.mainScreen.scale;
         
         if (self.delayBetweenPulseCycles != INFINITY && self.delayBetweenPulseCycles > 0) {
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
