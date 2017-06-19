@@ -47,13 +47,7 @@
         self.outerDotAlpha = 1;
         
         self.willMoveToSuperviewAnimationBlock = ^(SVPulsingAnnotationView *annotationView, UIView *superview) {
-            CAKeyframeAnimation *bounceAnimation = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"];
-            CAMediaTimingFunction *easeInOut = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-            
-            bounceAnimation.values = @[@0.05, @1.25, @0.8, @1.1, @0.9, @1.0];
-            bounceAnimation.duration = 0.3;
-            bounceAnimation.timingFunctions = @[easeInOut, easeInOut, easeInOut, easeInOut, easeInOut, easeInOut];
-            [annotationView.layer addAnimation:bounceAnimation forKey:@"popIn"];
+            [annotationView.layer addAnimation:[SVPulsingAnnotationView bounceAnimation] forKey:@"popIn"];
         };
     }
     return self;
@@ -101,14 +95,18 @@
         self.willMoveToSuperviewAnimationBlock(self, superview);
 }
 
-- (void)popIn {
++ (CAKeyframeAnimation *)bounceAnimation {
     CAKeyframeAnimation *bounceAnimation = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"];
     CAMediaTimingFunction *easeInOut = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
     
     bounceAnimation.values = @[@0.05, @1.25, @0.8, @1.1, @0.9, @1.0];
     bounceAnimation.duration = 0.3;
     bounceAnimation.timingFunctions = @[easeInOut, easeInOut, easeInOut, easeInOut, easeInOut, easeInOut];
-    [self.layer addAnimation:bounceAnimation forKey:@"popIn"];
+    return bounceAnimation;
+}
+
+- (void)popIn {
+    [self.layer addAnimation:[SVPulsingAnnotationView bounceAnimation] forKey:@"popIn"];
 }
 
 #pragma mark - Setters
