@@ -40,6 +40,7 @@
         self.pulseScaleFactor = 5.3;
         self.pulseAnimationDuration = 1.5;
         self.outerPulseAnimationDuration = 3;
+        self.colorDotInset = 3;
         self.delayBetweenPulseCycles = 0;
         self.annotationColor = [UIColor colorWithRed:0.000 green:0.478 blue:1.000 alpha:1];
         self.outerColor = [UIColor whiteColor];
@@ -253,14 +254,14 @@
 - (CALayer*)colorDotLayer {
     if (!_colorDotLayer) {
         _colorDotLayer = [CALayer layer];
-        CGFloat width = self.bounds.size.width-6;
+        CGFloat width = self.bounds.size.width-self.colorDotInset*2;
         _colorDotLayer.bounds = CGRectMake(0, 0, width, width);
         _colorDotLayer.allowsGroupOpacity = YES;
         _colorDotLayer.backgroundColor = self.annotationColor.CGColor;
         _colorDotLayer.cornerRadius = width/2;
         _colorDotLayer.position = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
         
-        if (self.delayBetweenPulseCycles != INFINITY) {
+        if (self.delayBetweenPulseCycles != INFINITY && self.delayBetweenPulseCycles > 0) {
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
                 
                 CAMediaTimingFunction *defaultCurve = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionDefault];

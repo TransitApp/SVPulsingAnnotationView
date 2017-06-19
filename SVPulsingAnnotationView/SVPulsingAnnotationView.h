@@ -18,6 +18,8 @@
 
 @property (nonatomic, readwrite) float outerDotAlpha; // default is 1
 @property (nonatomic, readwrite) float pulseScaleFactor; // default is 5.3
+@property (nonatomic, readwrite) float colorDotInset; // default is 3
+
 @property (nonatomic, readwrite) NSTimeInterval pulseAnimationDuration; // default is 1s
 @property (nonatomic, readwrite) NSTimeInterval outerPulseAnimationDuration; // default is 3s
 @property (nonatomic, readwrite) NSTimeInterval delayBetweenPulseCycles; // default is 1s
