@@ -87,6 +87,17 @@
         [self.layer addSublayer:self.colorDotLayer];
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+
+    if (@available(iOS 12.0, *)) {
+        if (self.traitCollection.userInterfaceStyle != previousTraitCollection.userInterfaceStyle) {
+            [[SVPulsingAnnotationView cachedRingImages] removeAllObjects];
+            [self rebuildLayers];
+        }
+    }
+}
+
 - (void)willMoveToSuperview:(UIView *)superview {
     if (superview)
         [self rebuildLayers];
