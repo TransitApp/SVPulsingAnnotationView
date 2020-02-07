@@ -53,7 +53,7 @@
     return self;
 }
 
-- (void)rebuildLayers {
+- (void)recreateLayers {
     [self.layer removeAllAnimations];
     
     [_outerDotLayer removeFromSuperlayer];
@@ -85,6 +85,16 @@
         [self addSubview:self.imageView];
     else
         [self.layer addSublayer:self.colorDotLayer];
+}
+
+- (void)rebuildLayers {
+    if (@available(iOS 13.0, *)) {
+        [self.traitCollection performAsCurrentTraitCollection:^{
+            [self recreateLayers];
+        }];
+    } else {
+        [self recreateLayers];
+    }
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
