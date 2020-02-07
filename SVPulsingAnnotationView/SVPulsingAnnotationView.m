@@ -53,47 +53,46 @@
     return self;
 }
 
-- (void)recreateLayers {
-    [self.layer removeAllAnimations];
+- (void)rebuildLayers {
+    void (^ rebuildBlock)(void) = ^{
+        [self.layer removeAllAnimations];
+        
+        [self->_outerDotLayer removeFromSuperlayer];
+        self->_outerDotLayer = nil;
+        
+        [self->_colorDotLayer removeFromSuperlayer];
+        self->_colorDotLayer = nil;
+        
+        [self->_colorHaloLayer removeFromSuperlayer];
+        self->_colorHaloLayer = nil;
+        
+        if (!self.image) {
+            [self->_imageView removeFromSuperview];
+            self->_imageView = nil;
+        }
+        
+        if (self.headingImage) {
+            [self addSubview:self.headingImageView];
+        }
+        else {
+            [self->_headingImageView removeFromSuperview];
+            self->_headingImageView = nil;
+        }
+        
+        [self.layer addSublayer:self.colorHaloLayer];
+        [self.layer addSublayer:self.outerDotLayer];
+        
+        if (self.image)
+            [self addSubview:self.imageView];
+        else
+            [self.layer addSublayer:self.colorDotLayer];
+    };
     
-    [_outerDotLayer removeFromSuperlayer];
-    _outerDotLayer = nil;
-    
-    [_colorDotLayer removeFromSuperlayer];
-    _colorDotLayer = nil;
-    
-    [_colorHaloLayer removeFromSuperlayer];
-    _colorHaloLayer = nil;
-    
-    if (!self.image) {
-        [_imageView removeFromSuperview];
-        _imageView = nil;
-    }
-    
-    if (self.headingImage) {
-        [self addSubview:self.headingImageView];
+    if (@available(iOS 13.0, *)) {
+        [self.traitCollection performAsCurrentTraitCollection:rebuildBlock];
     }
     else {
-        [_headingImageView removeFromSuperview];
-        _headingImageView = nil;
-    }
-    
-    [self.layer addSublayer:self.colorHaloLayer];
-    [self.layer addSublayer:self.outerDotLayer];
-    
-    if (self.image)
-        [self addSubview:self.imageView];
-    else
-        [self.layer addSublayer:self.colorDotLayer];
-}
-
-- (void)rebuildLayers {
-    if (@available(iOS 13.0, *)) {
-        [self.traitCollection performAsCurrentTraitCollection:^{
-            [self recreateLayers];
-        }];
-    } else {
-        [self recreateLayers];
+        rebuildBlock();
     }
 }
 
