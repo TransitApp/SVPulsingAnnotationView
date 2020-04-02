@@ -25,5 +25,6 @@
 @property (nonatomic, readwrite) NSTimeInterval delayBetweenPulseCycles; // default is 1s
 
 @property (nonatomic, copy) void (^willMoveToSuperviewAnimationBlock)(SVPulsingAnnotationView *view, UIView *superview); // default is pop animation
+@property (nonatomic, copy) void (^didRebuildLayersBlock)(SVPulsingAnnotationView *view);
 
 @end

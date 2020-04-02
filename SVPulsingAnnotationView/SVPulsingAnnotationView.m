@@ -86,6 +86,10 @@
             [self addSubview:self.imageView];
         else
             [self.layer addSublayer:self.colorDotLayer];
+        
+        if (self.didRebuildLayersBlock) {
+            self.didRebuildLayersBlock(self);
+        }
     };
     
     if (@available(iOS 13.0, *)) {
