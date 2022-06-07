@@ -175,8 +175,8 @@
     CGFloat imageHeight = ceil(image.size.height);
     
     self.imageView.image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    self.imageView.frame = CGRectMake(floor((self.bounds.size.width - imageWidth) * 0.5),
-                                      floor((self.bounds.size.height - imageHeight) * 0.5),
+    self.imageView.frame = CGRectMake((self.bounds.size.width - imageWidth) * 0.5,
+                                      (self.bounds.size.height - imageHeight) * 0.5,
                                       imageWidth,
                                       imageHeight);
     self.imageView.tintColor = self.annotationColor;
@@ -193,8 +193,8 @@
     CGFloat imageHeight = ceil(image.size.height);
     
     self.headingImageView.image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    self.headingImageView.frame = CGRectMake(floor((self.bounds.size.width - imageWidth) * 0.5),
-                                             floor((self.bounds.size.height - imageHeight) * 0.5),
+    self.headingImageView.frame = CGRectMake((self.bounds.size.width - imageWidth) * 0.5,
+                                             (self.bounds.size.height - imageHeight) * 0.5,
                                              imageWidth,
                                              imageHeight);
     self.headingImageView.tintColor = self.annotationColor;
