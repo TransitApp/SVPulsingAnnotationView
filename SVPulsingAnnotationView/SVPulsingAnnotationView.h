@@ -27,4 +27,6 @@
 @property (nonatomic, copy) void (^willMoveToSuperviewAnimationBlock)(SVPulsingAnnotationView *view, UIView *superview); // default is pop animation
 @property (nonatomic, copy) void (^didRebuildLayersBlock)(SVPulsingAnnotationView *view);
 
+- (void)configureShadowWithColor:(CGColorRef)color offset:(CGSize)offset radius:(CGFloat)radius opacity:(CGFloat)opacity;
+
 @end
