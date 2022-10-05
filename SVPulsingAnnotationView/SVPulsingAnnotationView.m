@@ -18,6 +18,11 @@
 @property (nonatomic, strong) CALayer *colorDotLayer;
 @property (nonatomic, strong) CALayer *colorHaloLayer;
 
+@property (nonatomic, assign) CGSize shadowOffset;
+@property (nonatomic, assign) CGFloat shadowRadius;
+@property (nonatomic, assign) CGColorRef shadowColor;
+@property (nonatomic, assign) CGFloat shadowOpacity;
+
 @end
 
 @implementation SVPulsingAnnotationView
@@ -45,6 +50,7 @@
         self.annotationColor = [UIColor colorWithRed:0.000 green:0.478 blue:1.000 alpha:1];
         self.outerColor = [UIColor whiteColor];
         self.outerDotAlpha = 1;
+        [self configureShadowWithColor:UIColor.blackColor.CGColor offset:CGSizeMake(0, 2) radius:3 opacity:0.3];
         
         self.willMoveToSuperviewAnimationBlock = ^(SVPulsingAnnotationView *annotationView, UIView *superview) {
             [annotationView.layer addAnimation:[SVPulsingAnnotationView bounceAnimation] forKey:@"popIn"];
@@ -134,6 +140,20 @@
 }
 
 #pragma mark - Setters
+
+- (void)configureShadowWithColor:(CGColorRef)color
+                        offset:(CGSize)offset
+                        radius:(CGFloat)radius
+                       opacity:(CGFloat)opacity
+{
+    self.shadowColor = color;
+    self.shadowOffset = offset;
+    self.shadowRadius = radius;
+    self.shadowOpacity = opacity;
+    
+    if (self.superview)
+        [self rebuildLayers];
+}
 
 - (void)setAnnotationColor:(UIColor *)annotationColor {
     if (CGColorGetNumberOfComponents(annotationColor.CGColor) == 2) {
@@ -264,10 +284,10 @@
         _outerDotLayer.position = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
         _outerDotLayer.contentsGravity = kCAGravityCenter;
         _outerDotLayer.contentsScale = [UIScreen mainScreen].scale;
-        _outerDotLayer.shadowColor = [UIColor blackColor].CGColor;
-        _outerDotLayer.shadowOffset = CGSizeMake(0, 2);
-        _outerDotLayer.shadowRadius = 3;
-        _outerDotLayer.shadowOpacity = 0.3;
+        _outerDotLayer.shadowColor = self.shadowColor;
+        _outerDotLayer.shadowOffset = self.shadowOffset;
+        _outerDotLayer.shadowRadius = self.shadowRadius;
+        _outerDotLayer.shadowOpacity = self.shadowOpacity;
         _outerDotLayer.opacity = self.outerDotAlpha;
         _outerDotLayer.shouldRasterize = YES;
         _outerDotLayer.rasterizationScale = UIScreen.mainScreen.scale;
