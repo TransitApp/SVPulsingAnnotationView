@@ -29,6 +29,7 @@
 
 @synthesize annotation = _annotation;
 @synthesize image = _image;
+@synthesize pulseColor = _pulseColor;
 
 + (NSMutableDictionary*)cachedRingImages {
     static NSMutableDictionary *cachedRingLayers = nil;
@@ -171,8 +172,6 @@
 }
 
 -(void)setPulseColor:(UIColor *)pulseColor {
-    _pulseColor = pulseColor;
-
     if (self.superview)
         [self rebuildLayers];
 }
