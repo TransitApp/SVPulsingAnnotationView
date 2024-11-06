@@ -229,7 +229,7 @@
 
 #pragma mark - Getters
 
-- (UIColor *)getPulseColor {
+- (UIColor *)pulseColor {
     if (!_pulseColor)
         return self.annotationColor;
     return _pulseColor;
