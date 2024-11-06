@@ -170,6 +170,13 @@
         [self rebuildLayers];
 }
 
+-(void)setPulseColor:(UIColor *)pulseColor {
+    _pulseColor = pulseColor;
+
+    if (self.superview)
+        [self rebuildLayers];
+}
+
 - (void)setDelayBetweenPulseCycles:(NSTimeInterval)delayBetweenPulseCycles {
     _delayBetweenPulseCycles = delayBetweenPulseCycles;
     
